@@ -1,12 +1,16 @@
-FROM debian:stretch
+FROM openjdk:8-jdk
 
 MAINTAINER Ian Burrell <iburrell@comscore.com>
 
-RUN apt-get update
-RUN apt-get install -y openjdk-8-jdk scala curl
+ENV spark_ver 2.1.1
 
-RUN curl https://d3kbcqa49mib13.cloudfront.net/spark-2.1.1-bin-hadoop2.7.tgz | tar -xz -C /opt
-RUN ln -s spark-2.1.1-bin-hadoop2.7 /opt/spark-2.1.1
+RUN mkdir -p /opt && \
+    cd /opt && \
+    curl http://www.us.apache.org/dist/spark/spark-${spark_ver}/spark-${spark_ver}-bin-hadoop2.7.tgz | \
+        tar -zx && \
+    ln -s spark-${spark_ver}-bin-hadoop2.7 spark-${spark_ver} && \
+echo Spark ${spark_ver} installed in /opt
 
-ENV SPARK_HOME /opt/spark-2.1.1
-ENV PATH "${PATH}:${SPARK_HOME}/bin"
+ENV SPARK_HOME /opt/spark-${spark_ver}
+ENV PATH "${PATH}:${SPARK_HOME}}/bin"
+
