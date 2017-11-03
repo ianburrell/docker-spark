@@ -2,7 +2,7 @@ FROM openjdk:8-jdk
 
 MAINTAINER Ian Burrell <iburrell@comscore.com>
 
-ENV spark_ver 2.1.1
+ENV spark_ver 2.1.2
 
 RUN mkdir -p /opt && \
     cd /opt && \
